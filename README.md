@@ -9,33 +9,35 @@ This document provides information about CSEMS' core classes and also provides e
 First, we will talk about the core base classes, then give examples about the event managers, continue with in-house events, and finish by showing how you can add your own events and event managers.
 
 ## Table of Content
-### 1. [TEST](https://github.com/mcihanozer/CSEMS#step-4-implementing-event-handlers)
+### 1. [Information About Base Classes](https://github.com/mcihanozer/CSEMS#information-about-base-classes)
+### 1.1 [Core classes](https://github.com/mcihanozer/CSEMS#core-classes)
+#### 1.2 [Observer design pattern based](https://github.com/mcihanozer/CSEMS#observer-design-pattern-based)
 
-## Information About Base Classes
+## 1. Information About Base Classes
 
 Here, you will find some informarion about the core classes you should be aware of for constructing your own code.
 
-### Core classes
+### 1.1 Core classes
 
 Each class should be either inherited from **LB_BaseGameObject**, which is inherited from **LB_BaseObject**, or at least implement **LB_IBaseGameObjectFunctionality** interface. Otherwise, they cannot receive essential calls, such as **_LB_Awake()_**, **_LB_Start()_**, **_LB_Update()_**, and so on.
 
 If you are familiar with Unity, these methods have the same purpose with **_MonoBehaviour.Awake()_**, **_MonoBehaviour.Start()_**, and **_MonoBehaviour.Update()_**.
 
-#### LB_BaseObject
+#### 1.1.1 LB_BaseObject
 
 Base class for any objects in the project. This class includes some common members and properties, such as id, name, etc.
 
-#### LB_IBaseGameObjectFunctionality
+#### 1.1.2 LB_IBaseGameObjectFunctionality
 
 Interface that provides the esential methods for a game object class.
 
-#### LB_BaseGameObject
+#### 1.1.3 LB_BaseGameObject
 
 Base class for the classes that will take a part in the game related tasks, but will not need to be inherited from MonoBehaviour of Unity, such as game managers, event managers, and so on.
 
 LB_BaseGmeObject provides the common blue print methods, needed members, and common functionality.
 
-### Observer design pattern based
+### 1.2 Observer design pattern based
 
 CSEMS is designed based on observer design pattern. Event managers are initiated with **Subject** class and event handlers are initiated with **Observer** class.
 
