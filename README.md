@@ -10,13 +10,13 @@ First, we will talk about the core base classes, then give examples about the ev
 
 ## Table of Content
 1. [Information About Base Classes](https://github.com/mcihanozer/CSEMS#information-about-base-classes)
-   1. [Core classes](https://github.com/mcihanozer/CSEMS#core-classes)
-   2. [Observer design pattern based](https://github.com/mcihanozer/CSEMS#12-observer-design-pattern-based-1)
-   3. [Base classes for event managers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#base-classes-for-event-managers)
+   1.1. [Core classes](https://github.com/mcihanozer/CSEMS#core-classes)
+   1.2. [Observer design pattern based](https://github.com/mcihanozer/CSEMS#12-observer-design-pattern-based-1)
+   1.3. [Base classes for event managers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#base-classes-for-event-managers)
 2. [Event Managers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#event-managers)
    1. [System related event managers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#system-related-event-managers)
    2. [Example user-defined event managers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#22-example-user-defined-event-managers)
-3. [3. Events](https://github.com/mcihanozer/CSEMS/blob/master/README.md#3-events)
+3. [Events](https://github.com/mcihanozer/CSEMS/blob/master/README.md#3-events)
    1. [System event types](https://github.com/mcihanozer/CSEMS/blob/master/README.md#31-system-event-types)
    2. [Example user-defined events](https://github.com/mcihanozer/CSEMS/blob/master/README.md#32-example-user-defined-events)
 4. [Event Handlers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#4-event-handlers)
