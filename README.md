@@ -67,51 +67,51 @@ Here, we will talk about example event managers provided. They all define their 
 
 **TouchEventManager:** is a singleton event manager for handling touch events. This manager works via Unity's Input class.
 
-### Example user-defined event managers
+### 2.2. Example user-defined event managers
 
 **HexfallUIEventManager:** is a singleton event manager for managing Hexfall game UI events.
 
 **HexfallEventManager:** is a singleton event manager for Hexfall related event management.
 
-## Events
+## 3. Events
 
 All events are inherited from **_LB_Event_** class and define their own event type and define other specialities if needed.
 
-### System event types
+### 3.1 System event types
 
 Now, we will talk about system and user-defined events.
 
-#### LB_Event
+#### 3.1.1. LB_Event
 
 _LB_Event_ is the base event class both for system and user-defined events. It defines parent event information (system, touch, mouse, user-defined, and so on), event type (mouse down, touch up, etc.), and an **_object_** type member in case you need to hold extra information.
 
-#### LB_ButtonEvent
+#### 3.1.2. LB_ButtonEvent
 
 _LB_ButtonEvent_ is an in-house button event for handling click, button down, and button up events. **_LB_Button_** script is added to the buttons in the project and related callbacks (click, button down, and button up) are assigned via Unity editor. These callbacks automatically creates related events and register them to **_ButtonEventManager_**.
 
-#### LB_SystemEvent
+#### 3.1.3. LB_SystemEvent
 
 _LB_SystemEvent_ is used for handling system related actions, such as quit request, processing quit request and so on.
 
-#### LB_MouseEvent
+#### 3.1.4. LB_MouseEvent
 
 _LB_MouseEvent_ is an in-house mouse event used for handling mouse down, mouse up, and mouse hold and move events. It also provides information about mouse x and y positions in pixel coordinates.
 
-#### LB_TouchEvent
+#### 3.1.5. LB_TouchEvent
 
 _LB_TouchEvent_ is an in-house touch event used for handling touch down, touch up, and touch and move events. It also provides information about touch x and y positions in pixel coordinates.
 
-### Example user-defined events
+### 3.2. Example user-defined events
 
-#### HexfallUIEvent
+#### 3.2.1. HexfallUIEvent
 
 _HexfallUIEvent_ provides events such as main menu, go game preparation, go in game, and so on. These events are used to change between game menus.
 
-#### HexfallEvent
+#### 3.2.2. HexfallEvent
 
 _HexfallEvent_ provides events such as start game, quit game, score, generate bomb, generate hex, and so on. These events are used to handle actions in the game, mostly by various game controllers.
 
-## Event Handlers
+## 4. Event Handlers
 
 Event handlers are interfaces based on generic **_LB_Observer_** class mentioned in **_Subject and Observer classes_** section. Each event handler inherits **_LB_Observer_** by its event type. Each class that aims to handle one or more events implements **_HandleEvent(EventType e)_** method provides by the related event handler.
 
@@ -126,7 +126,7 @@ You can find more examples in the list below:
 - **IHexfallUIEventHandler:** inherites `LB_Observer` with `HexfallUIEvent`, provides `void HandleEvent(HexfallUIEvent e)`method
 - **IHexfallEventHandler:** inherites `LB_Observer` with `HexfallEvent`, provides `void HandleEvent(HexfallEvent e)` method
 
-## An Example: HexfallGameController
+## 5. An Example: HexfallGameController
 
 Let us assume we need a game controller that needs to handle mouse and touch events. Here, we will show how to create these events, event managers, and related event handlers.
 
@@ -138,11 +138,11 @@ For constructing such system
 4. and implement the related **_HandleEvent(EventType e)_** methods.
 
 
-### Step 1: Creating the events
+### 5.1. Step 1: Creating the events
 
 Here, we will define mouse and touch events, their managers, and event handlers. We will end the example by implementing mouse and input event handler methods.
 
-#### Creating mouse and touch events
+#### 5.1.1. Creating mouse and touch events
 
 Let's assume we want to design a mouse event providing mouse down, mouse up, and mouse hold and move events along mouse x and y positions in pixel coordinates. We can achieve this goal by the following steps:
 
@@ -197,11 +197,11 @@ public class LB_MouseEvent : LB_Event
 ```
 We would define touch event as in the same way. You can refer to other event examples provided if you need more detail.
 
-### Step 2: Creating the event handlers
+### 5.2. Step 2: Creating the event handlers
 
 Since, we now have our events, we can define our event handlers. Event handlers are interfaces based on generic **LB_Observer** interface. Each event handler defines itself by an associated event and provides an event handler method via **LB_Observer** interface.
 
-#### Creating mouse and touch event handlers
+#### 5.2.1. Creating mouse and touch event handlers
 
 Let's consider mouse and touch event handlers based on what we've covered so far:
 
@@ -216,7 +216,7 @@ public interface LB_ITouchEventHandler : LB_Observer<LB_TouchEvent>
 ```
 C'est tout! Defining event handlers in CSEMS is very straightforward.
 
-### Step 3: Creating the event managers
+### 5.3. Step 3: Creating the event managers
 
 Event managers are basically the subjects in observer pattern. CSEMS encapsulates the subject class via **BaseEventManager**. You can still create subject classes based on **LB_Subject** if you need for different purposes, such as you need a messaging system, but for creating an event manager that will work in CSEMS, you need to inherit your user-defined event manager from **BaseEventManager**.
 
@@ -247,7 +247,7 @@ public class HexfallEventManager : BaseEventManager<HexfallEvent, IHexfallEventH
 
 The singleton is a design choice and you do not need to define your event manager as singleton. Also, if you do not need some special requirements, as **MouseEventManager**, you also do not need to override any methods. **BaseEventManager** provides you all functionality you need for an event-driven system, such as adding event, notifying listerners, registering to **MainEventManager**, and so on.
 
-### Step 4: Implementing event handlers
+### 5.4. Step 4: Implementing event handlers
 
 Let's go back to our mouse and input events and their event handlers along their event managers. In this part, we will focus on implementing a game controller that receives mouse and touch events.
 
