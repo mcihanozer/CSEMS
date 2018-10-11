@@ -9,39 +9,52 @@ This document provides information about CSEMS' core classes and also provides e
 First, we will talk about the core base classes, then give examples about the event managers, continue with in-house events, and finish by showing how you can add your own events and event managers.
 
 ## Table of Content
-### 1. [Information About Base Classes](https://github.com/mcihanozer/CSEMS#information-about-base-classes)
-### 1.1 [Core classes](https://github.com/mcihanozer/CSEMS#core-classes)
-#### 1.2 [Observer design pattern based](https://github.com/mcihanozer/CSEMS#12-observer-design-pattern-based-1)
+### [1. Information About Base Classes](https://github.com/mcihanozer/CSEMS#information-about-base-classes)
+#### [1.1. Core classes](https://github.com/mcihanozer/CSEMS#core-classes)
+#### [1.2. Observer design pattern based](https://github.com/mcihanozer/CSEMS#12-observer-design-pattern-based-1)
+#### [1.3. Base classes for event managers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#base-classes-for-event-managers)
+### [2. Event Managers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#event-managers)
+#### [2.1. System related event managers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#system-related-event-managers)
+#### [2.2. Example user-defined event managers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#22-example-user-defined-event-managers)
+### [3. Events](https://github.com/mcihanozer/CSEMS/blob/master/README.md#3-events)
+#### [3.1. System event types](https://github.com/mcihanozer/CSEMS/blob/master/README.md#31-system-event-types)
+#### [3.2. Example user-defined events](https://github.com/mcihanozer/CSEMS/blob/master/README.md#32-example-user-defined-events)
+### [4. Event Handlers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#4-event-handlers)
+### [5. An Example: HexfallGameController](https://github.com/mcihanozer/CSEMS/blob/master/README.md#5-an-example-hexfallgamecontroller)
+#### [5.1. Step 1: Creating the events](https://github.com/mcihanozer/CSEMS/blob/master/README.md#51-step-1-creating-the-events)
+#### [5.2. Step 2: Creating the event handlers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#52-step-2-creating-the-event-handlers)
+#### [5.3. Step 3: Creating the event managers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#53-step-3-creating-the-event-managers)
+#### [5.4. Step 4: Implementing event handlers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#54-step-4-implementing-event-handlers)
 
 ## 1. Information About Base Classes
 
 Here, you will find some informarion about the core classes you should be aware of for constructing your own code.
 
-### 1.1 Core classes
+### 1.1. Core classes
 
 Each class should be either inherited from **LB_BaseGameObject**, which is inherited from **LB_BaseObject**, or at least implement **LB_IBaseGameObjectFunctionality** interface. Otherwise, they cannot receive essential calls, such as **_LB_Awake()_**, **_LB_Start()_**, **_LB_Update()_**, and so on.
 
 If you are familiar with Unity, these methods have the same purpose with **_MonoBehaviour.Awake()_**, **_MonoBehaviour.Start()_**, and **_MonoBehaviour.Update()_**.
 
-#### 1.1.1 LB_BaseObject
+#### 1.1.1. LB_BaseObject
 
 Base class for any objects in the project. This class includes some common members and properties, such as id, name, etc.
 
-#### 1.1.2 LB_IBaseGameObjectFunctionality
+#### 1.1.2. LB_IBaseGameObjectFunctionality
 
 Interface that provides the esential methods for a game object class.
 
-#### 1.1.3 LB_BaseGameObject
+#### 1.1.3. LB_BaseGameObject
 
 Base class for the classes that will take a part in the game related tasks, but will not need to be inherited from MonoBehaviour of Unity, such as game managers, event managers, and so on.
 
 LB_BaseGmeObject provides the common blue print methods, needed members, and common functionality.
 
-### 1.2 Observer design pattern based
+### 1.2. Observer design pattern based
 
 CSEMS is designed based on observer design pattern. Event managers are initiated with **Subject** class and event handlers are initiated with **Observer** class.
 
-#### Subject and Observer classes
+#### 1.2.1. Subject and Observer classes
 
 Generic base Subject and Observer classes for an event-driven system.
 
@@ -53,11 +66,11 @@ Any number of observers can observe a subject. So, this is one-to-many relations
 
 All event managers (including user-defined ones) are inherited from generic **_BaseEventManager_** and automatically registers themselves to **_MainEventManager_** to receive frame calls (_Update()_, _callOnFrame()_, and so on). **_MainEventManager_** is a singleton class and it manages all event managers in the project. Sub-event managers operates via **_MainEventManager_**.
 
-## Event Managers
+## 2. Event Managers
 
 Here, we will talk about example event managers provided. They all define their own related events and inherit themselves from **_BaseEventManager_**. Event-handling classes (the classes that want to listen a particular event) implement **_Observer_** interface and register themselves to related event manager.
 
-### System related event managers
+### 2.1. System related event managers
 
 **ButtonEventManager:** is a singleton event manager for handling **_LB_Button_** events. **_LB_Button_** events are in-house events for handling Unity buttons better and easier. We will cover **_LB_Button_** events later detailed.
 
