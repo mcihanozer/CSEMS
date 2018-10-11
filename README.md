@@ -62,7 +62,7 @@ Subject object maintains a list of its dependents, called observers. The observe
 
 Any number of observers can observe a subject. So, this is one-to-many relationship.
 
-### Base classes for event managers
+### 1.3. Base classes for event managers
 
 All event managers (including user-defined ones) are inherited from generic **_BaseEventManager_** and automatically registers themselves to **_MainEventManager_** to receive frame calls (_Update()_, _callOnFrame()_, and so on). **_MainEventManager_** is a singleton class and it manages all event managers in the project. Sub-event managers operates via **_MainEventManager_**.
 
