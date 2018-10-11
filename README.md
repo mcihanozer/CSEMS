@@ -9,22 +9,22 @@ This document provides information about CSEMS' core classes and also provides e
 First, we will talk about the core base classes, then give examples about the event managers, continue with in-house events, and finish by showing how you can add your own events and event managers.
 
 ## Table of Content
-1. [Information About Base Classes](https://github.com/mcihanozer/CSEMS#information-about-base-classes)
-   1. [Core classes](https://github.com/mcihanozer/CSEMS#core-classes)
-   2. [Observer design pattern based](https://github.com/mcihanozer/CSEMS#12-observer-design-pattern-based-1)
-   3. [Base classes for event managers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#base-classes-for-event-managers)
-2. [Event Managers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#event-managers)
-   1. [System related event managers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#system-related-event-managers)
-   2. [Example user-defined event managers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#22-example-user-defined-event-managers)
-3. [Events](https://github.com/mcihanozer/CSEMS/blob/master/README.md#3-events)
-   1. [System event types](https://github.com/mcihanozer/CSEMS/blob/master/README.md#31-system-event-types)
-   2. [Example user-defined events](https://github.com/mcihanozer/CSEMS/blob/master/README.md#32-example-user-defined-events)
-4. [Event Handlers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#4-event-handlers)
-5. [An Example: HexfallGameController](https://github.com/mcihanozer/CSEMS/blob/master/README.md#5-an-example-hexfallgamecontroller)
-   1. [Step 1: Creating the events](https://github.com/mcihanozer/CSEMS/blob/master/README.md#51-step-1-creating-the-events)
-   2. [Step 2: Creating the event handlers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#52-step-2-creating-the-event-handlers)
-   3. [Step 3: Creating the event managers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#53-step-3-creating-the-event-managers)
-   4. [Step 4: Implementing event handlers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#54-step-4-implementing-event-handlers)
+1. [Information About Base Classes](https://github.com/mcihanozer/CSEMS#1-information-about-base-classes)
+   1. [Core classes](https://github.com/mcihanozer/CSEMS#11-core-classes)
+   2. [Observer design pattern based](https://github.com/mcihanozer/CSEMS#12-observer-design-pattern-based)
+   3. [Base classes for event managers](https://github.com/mcihanozer/CSEMS#base-classes-for-event-managers)
+2. [Event Managers](https://github.com/mcihanozer/CSEMS#2-event-managers)
+   1. [System related event managers](https://github.com/mcihanozer/CSEMS#21-system-related-event-managers)
+   2. [Example user-defined event managers](https://github.com/mcihanozer/CSEMS#22-example-user-defined-event-managers)
+3. [Events](https://github.com/mcihanozer/CSEMS#3-events)
+   1. [System event types](https://github.com/mcihanozer/CSEMS#31-system-event-types)
+   2. [Example user-defined events](https://github.com/mcihanozer/CSEMS#32-example-user-defined-events)
+4. [Event Handlers](https://github.com/mcihanozer/CSEMS#4-event-handlers)
+5. [An Example: HexfallGameController](https://github.com/mcihanozer/CSEMS#5-an-example-hexfallgamecontroller)
+   1. [Step 1: Creating the events](https://github.com/mcihanozer/CSEMS#51-step-1-creating-the-events)
+   2. [Step 2: Creating the event handlers](https://github.com/mcihanozer/CSEMS#52-step-2-creating-the-event-handlers)
+   3. [Step 3: Creating the event managers](https://github.com/mcihanozer/CSEMS#53-step-3-creating-the-event-managers)
+   4. [Step 4: Implementing event handlers](https://github.com/mcihanozer/CSEMS#54-step-4-implementing-event-handlers)
 
 ## 1. Information About Base Classes
 
