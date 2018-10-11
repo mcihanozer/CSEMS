@@ -9,8 +9,8 @@ This document provides information about CSEMS' core classes and also provides e
 First, we will talk about the core base classes, then give examples about the event managers, continue with in-house events, and finish by showing how you can add your own events and event managers.
 
 ## Table of Content
-### 1. [Information About Base Classes](https://github.com/mcihanozer/CSEMS#information-about-base-classes)
-####      1.[Core classes](https://github.com/mcihanozer/CSEMS#core-classes)
+1. [Information About Base Classes](https://github.com/mcihanozer/CSEMS#information-about-base-classes)
+	1.[Core classes](https://github.com/mcihanozer/CSEMS#core-classes)
 #### [1.2. Observer design pattern based](https://github.com/mcihanozer/CSEMS#12-observer-design-pattern-based-1)
 #### [1.3. Base classes for event managers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#base-classes-for-event-managers)
 ### [2. Event Managers](https://github.com/mcihanozer/CSEMS/blob/master/README.md#event-managers)
