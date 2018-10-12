@@ -2,11 +2,11 @@
 
 C# event management system with in-house events and event managers. It can be used for any C# projects, but originally aimed for Unity.
 
-CSEMS is currently highly unstable and still in evolution process.
+CSEMS is currently highly unstable and still in evolution.
 
-This document provides information about CSEMS' core classes and also provides examples based on a hexfall game -user-defined event managers example (aka [Hexic by  Alexey Pajitnov](https://en.wikipedia.org/wiki/Hexic)).
+This document provides information about CSEMS' core classes and also provides examples based on a hexfall (aka [Hexic by  Alexey Pajitnov](https://en.wikipedia.org/wiki/Hexic)) game (user-defined event managers example).
 
-First, we will talk about the core base classes, then give examples about the event managers, continue with in-house events, and finish by showing how you can add your own events and event managers.
+First, we will talk about the core classes, then give examples about the event managers, continue with in-house events, and conclude by showing how you can add your own events and event managers.
 
 ## Table of Content
 1. [Information About Base Classes](https://github.com/mcihanozer/CSEMS#1-information-about-base-classes)
@@ -28,7 +28,7 @@ First, we will talk about the core base classes, then give examples about the ev
 
 ## 1. Information About Base Classes
 
-Here, you will find some informarion about the core classes you should be aware of for constructing your own code.
+Here, you will find some information about the core classes you should be aware of for constructing your own code.
 
 ### 1.1. Core classes
 
@@ -42,15 +42,15 @@ Base class for any objects in the project. This class includes some common membe
 
 #### 1.1.2. LB_IBaseGameObjectFunctionality
 
-Interface that provides the esential methods for a game object class.
+Interface that provides the esential methods for a game object class, such as update, fixed update, destroy, awake, start, and so on.
 
 #### 1.1.3. LB_BaseGameObject
 
 Base class for the classes that will take a part in the game related tasks, but will not need to be inherited from MonoBehaviour of Unity, such as game managers, event managers, and so on.
 
-LB_BaseGmeObject provides the common blue print methods, needed members, and common functionality.
+**LB_BaseGameObject** implements **LB_IBaseGameObjectFunctionality** interface and provides the common blue print methods, needed members, and common functionality.
 
-### 1.2. Observer design pattern based
+### 1.2. Observer design pattern based classes
 
 CSEMS is designed based on observer design pattern. Event managers are initiated with **Subject** class and event handlers are initiated with **Observer** class.
 
@@ -64,35 +64,37 @@ Any number of observers can observe a subject. So, this is one-to-many relations
 
 ### 1.3. Base classes for event managers
 
-All event managers (including user-defined ones) are inherited from generic **_BaseEventManager_** and automatically registers themselves to **_MainEventManager_** to receive frame calls (_Update()_, _callOnFrame()_, and so on). **_MainEventManager_** is a singleton class and it manages all event managers in the project. Sub-event managers operates via **_MainEventManager_**.
+All event managers (including user-defined ones) are inherited from generic **_BaseEventManager_** and automatically register themselves to **_MainEventManager_** to receive frame calls (_Update()_, _callOnFrame()_, and so on).
+
+**_MainEventManager_** is a singleton class and it manages all event managers in the project. Subevent managers operate via **_MainEventManager_**.
 
 ## 2. Event Managers
 
-Here, we will talk about example event managers provided. They all define their own related events and inherit themselves from **_BaseEventManager_**. Event-handling classes (the classes that want to listen a particular event) implement **_Observer_** interface and register themselves to related event manager.
+Here, we will talk about event managers provided by CSEMS. They all define their own related events and inherit themselves from **_BaseEventManager_**. Event-handling classes, which are the classes listening a particular event, implement **_Observer_** interface and register themselves to related event manager.
 
 ### 2.1. System related event managers
 
-**ButtonEventManager:** is a singleton event manager for handling **_LB_Button_** events. **_LB_Button_** events are in-house events for handling Unity buttons better and easier. We will cover **_LB_Button_** events later detailed.
+**ButtonEventManager** is a singleton event manager for handling **_LB_Button_** events. **_LB_Button_** events are in-house events for handling Unity buttons better and easier. We will cover **_LB_Button_** events later detailed.
 
-**SystemEventManager:** is a singleton system event manager for handling system related events, such as quitting.
+**SystemEventManager** is a singleton system event manager for handling system related events, such as quitting.
 
-**MouseEventManager:** is a singleton event manager for handling mouse events. This manager works via Unity's Input class. It also provides an in-house mouse hold-and-move event.
+**MouseEventManager** is a singleton event manager for handling mouse events. This manager works via Unity's Input class. It also provides an in-house mouse hold-and-move event.
 
-**TouchEventManager:** is a singleton event manager for handling touch events. This manager works via Unity's Input class.
+**TouchEventManager** is a singleton event manager for handling touch events. This manager works via Unity's Input class.
 
 ### 2.2. Example user-defined event managers
 
-**HexfallUIEventManager:** is a singleton event manager for managing Hexfall game UI events.
+**HexfallUIEventManager** is a singleton event manager for managing Hexfall game UI events.
 
-**HexfallEventManager:** is a singleton event manager for Hexfall related event management.
+**HexfallEventManager** is a singleton event manager for Hexfall related event management.
+
+Here, making all event managers singleton is a design choice and you do not need to define your event managers as singleton. 
 
 ## 3. Events
 
-All events are inherited from **_LB_Event_** class and define their own event type and define other specialities if needed.
+All events are inherited from **_LB_Event_** class and define their own event type and define other specialities if needed. Now, we will talk about system and user-defined events.
 
 ### 3.1 System event types
-
-Now, we will talk about system and user-defined events.
 
 #### 3.1.1. LB_Event
 
@@ -126,40 +128,38 @@ _HexfallEvent_ provides events such as start game, quit game, score, generate bo
 
 ## 4. Event Handlers
 
-Event handlers are interfaces based on generic **_LB_Observer_** class mentioned in **_Subject and Observer classes_** section. Each event handler inherits **_LB_Observer_** by its event type. Each class that aims to handle one or more events implements **_HandleEvent(EventType e)_** method provides by the related event handler.
+Event handlers are interfaces based on generic **_LB_Observer_** interface mentioned in **_Subject and Observer classes_** section. Each event handler inherits **_LB_Observer_** by defining its event type. Each class aiming to handle one or more events implements **_HandleEvent(EventType e)_** method provides by the related event handler.
 
-For example, **_LB_IButtonHandler_** is inherited from **_LB_Observer_** interface with **_LB_ButtonEvent_** event. A class wanting to handle **_LB_Button_** events needs to use **_LB_IButtonHandler_** interface and to implement **_HandleEvent(LB_ButtonEvent e)_** method coming from  **_LB_IButtonHandler_** interface.
+For example, **_LB_IButtonHandler_** is inherited from **_LB_Observer_** interface with **_LB_ButtonEvent_** event. A class aiming to handle **_LB_Button_** events needs to use **_LB_IButtonHandler_** interface and to implement **_HandleEvent(LB_ButtonEvent e)_** method defined by **_LB_IButtonHandler_** interface.
 
 You can find more examples in the list below:
 
-- **LB_IButtonEventHandler:** inherites `LB_Observer` with `LB_ButtonEvent`, provides `void HandleEvent(LB_ButtonEvent e)` method
-- **LB_ISystemEventHandler:** inherites `LB_Observer` with `LB_SystemEvent`, provides `void HandleEvent(LB_SystemEvent e)` method
-- **LB_IMouseEventHandler:** inherites `LB_Observer` with `LB_MouseEvent`, provides `void HandleEvent(LB_MouseEvent e)` method
-- **LB_ITouchEventHandler:** inherites `LB_Observer` with `LB_TouchEvent`, provides `void HandleEvent(LB_TouchEvent e)` method
-- **IHexfallUIEventHandler:** inherites `LB_Observer` with `HexfallUIEvent`, provides `void HandleEvent(HexfallUIEvent e)`method
-- **IHexfallEventHandler:** inherites `LB_Observer` with `HexfallEvent`, provides `void HandleEvent(HexfallEvent e)` method
+- **LB_IButtonEventHandler** inherites `LB_Observer` with `LB_ButtonEvent`, provides `void HandleEvent(LB_ButtonEvent e)` method
+- **LB_ISystemEventHandler** inherites `LB_Observer` with `LB_SystemEvent`, provides `void HandleEvent(LB_SystemEvent e)` method
+- **LB_IMouseEventHandler** inherites `LB_Observer` with `LB_MouseEvent`, provides `void HandleEvent(LB_MouseEvent e)` method
+- **LB_ITouchEventHandler** inherites `LB_Observer` with `LB_TouchEvent`, provides `void HandleEvent(LB_TouchEvent e)` method
+- **IHexfallUIEventHandler** inherites `LB_Observer` with `HexfallUIEvent`, provides `void HandleEvent(HexfallUIEvent e)`method
+- **IHexfallEventHandler** inherites `LB_Observer` with `HexfallEvent`, provides `void HandleEvent(HexfallEvent e)` method
 
 ## 5. An Example: HexfallGameController
 
 Let us assume we need a game controller that needs to handle mouse and touch events. Here, we will show how to create these events, event managers, and related event handlers.
 
-For constructing such system
+For constructing such system;
 
 1. We need to define the related events based on **_LB_Event_**,
 2. Its event handler based on **_LB_Observer_**,
-3. Its event manager based on **_LB_Subject_**,
-4. and implement the related **_HandleEvent(EventType e)_** methods.
+3. Its event manager based on **BaseEventManager**,
+4. and implement the related **_HandleEvent(EventType e)_** methods in the game controller.
 
 
 ### 5.1. Step 1: Creating the events
-
-Here, we will define mouse and touch events, their managers, and event handlers. We will end the example by implementing mouse and input event handler methods.
 
 #### 5.1.1. Creating mouse and touch events
 
 Let's assume we want to design a mouse event providing mouse down, mouse up, and mouse hold and move events along mouse x and y positions in pixel coordinates. We can achieve this goal by the following steps:
 
-- [x] Inherit from LB_Event
+- [x] Inherit from **_LB_Event_**
 - [x] Define event types and event type field
 - [x] Define other specifications needed
 - [x] Define constructors
@@ -173,38 +173,38 @@ When we follow the general steps, we get a mouse event class as below:
 public class LB_MouseEvent : LB_Event
 {
   // Step 2: Define event types
-	public enum MOUSE_EVENTS : uint
-	{
-		 MOUSE_DOWN, MOUSE_UP, MOUSE_HOLD_MOVE
-	}
+  public enum MOUSE_EVENTS : uint
+  {
+     MOUSE_DOWN, MOUSE_UP, MOUSE_HOLD_MOVE
+  }
 
   // Step 2: Define event type field
-	public MOUSE_EVENTS EventType
+  public MOUSE_EVENTS EventType
   {
-		  get { return (MOUSE_EVENTS)EVENT_TYPE; }
-       set { EVENT_TYPE = (uint)value; }
-   }
+     get { return (MOUSE_EVENTS)EVENT_TYPE; }
+     set { EVENT_TYPE = (uint)value; }
+  }
 
    // Step 3: Define other specifications
    public float MOUSE_POS_X;
    public float MOUSE_POS_Y;
 
   // Step 4: Define constructors
-	public LB_MouseEvent() : base(LB_EVENTS.MOUSE_EVENT)
+  public LB_MouseEvent() : base(LB_EVENTS.MOUSE_EVENT)
   {
-		MOUSE_POS_X = -1;
-		MOUSE_POS_Y = -1;
+     MOUSE_POS_X = -1;
+     MOUSE_POS_Y = -1;
   }
 
-	public LB_MouseEvent(
-		                    MOUSE_EVENTS eventType,
-		                    float mousePosX, float mousePosY,
-		                    string extraInfo = ""
-	                    )
-		: base(LB_EVENTS.MOUSE_EVENT, (uint)eventType, extraInfo)
+  public LB_MouseEvent(
+		        MOUSE_EVENTS eventType,
+		        float mousePosX, float mousePosY,
+		        string extraInfo = ""
+	               )
+     : base(LB_EVENTS.MOUSE_EVENT, (uint)eventType, extraInfo)
   {
-		MOUSE_POS_X = mousePosX;
-		MOUSE_POS_Y = mousePosY;
+     MOUSE_POS_X = mousePosX;
+     MOUSE_POS_Y = mousePosY;
   }
 }
 ```
@@ -231,7 +231,7 @@ C'est tout! Defining event handlers in CSEMS is very straightforward.
 
 ### 5.3. Step 3: Creating the event managers
 
-Event managers are basically the subjects in observer pattern. CSEMS encapsulates the subject class via **BaseEventManager**. You can still create subject classes based on **LB_Subject** if you need for different purposes, such as you need a messaging system, but for creating an event manager that will work in CSEMS, you need to inherit your user-defined event manager from **BaseEventManager**.
+Event managers are basically the subjects in observer pattern. CSEMS encapsulates the subject class via **BaseEventManager**. You can still create your own subject classes based on **LB_Subject** if you need for different purposes, such as a messaging system, but for creating an event manager that will work in CSEMS, you need to inherit your user-defined event manager from **BaseEventManager**.
 
 Generic **BaseEventManager** manager requires two generic types; an _EventType_ based on _LB_Event_ and an _EventHandlerType_ based on _LB_Observer<EventType>_. Thus, when we create a mouse event manager `MouseEventManager`, we will inherit it from `BaseEventManager` as `public class MouseEventManager : BaseEventManager<LB_MouseEvent, LB_IMouseEventHadler>`.
   
@@ -247,7 +247,7 @@ public class HexfallEventManager : BaseEventManager<HexfallEvent, IHexfallEventH
 	static HexfallEventManager() { }
 
 	private HexfallEventManager() { }
-
+	
 	public static HexfallEventManager Instance
     {
         get
@@ -258,7 +258,7 @@ public class HexfallEventManager : BaseEventManager<HexfallEvent, IHexfallEventH
 }
 ```
 
-The singleton is a design choice and you do not need to define your event manager as singleton. Also, if you do not need some special requirements, as **MouseEventManager**, you also do not need to override any methods. **BaseEventManager** provides you all functionality you need for an event-driven system, such as adding event, notifying listerners, registering to **MainEventManager**, and so on.
+The singleton is a design choice and you do not need to define your event manager as singleton. Also, if you do not need some special requirements, i.e. **MouseEventManager**, you also do not need to override any methods. **BaseEventManager** provides you all functionality you need for an event-driven system, such as pushing a new event, notifying listeners, registering to **MainEventManager**, and so on.
 
 ### 5.4. Step 4: Implementing event handlers
 
@@ -268,7 +268,7 @@ There are two steps to achieve this functionality:
  1. Implementing related event handlers
  2. Registering to the related event managers
  
- for having the chance of implementing the related event handlers, first we need to inherit from the related event handlers. In our case, these are `LB_IMouseEventHandler` and `LB_ITouchEventHandler`. So, we will define our `HexfallGameController` class as `public class HexfallGameController : LB_BaseGameObject, LB_IMouseEventHandler, LB_ITouchEventHandler`.
+For being able to implement the related event handlers, we need to inherit from the related event handlers. In our case, these are `LB_IMouseEventHandler` and `LB_ITouchEventHandler`. So, we will define our `HexfallGameController` class as `public class HexfallGameController : LB_BaseGameObject, LB_IMouseEventHandler, LB_ITouchEventHandler`.
  
  After having the event handlers, implementing them is straightforward and not any different than implementing any interface method. Let's assume, we have the following actions depending on the events we receiver:
  
@@ -280,36 +280,36 @@ There are two steps to achieve this functionality:
  
  ```
 public void HandleEvent(LB_MouseEvent e)
+{
+	if (e.EventType == LB_MouseEvent.MOUSE_EVENTS.MOUSE_DOWN)
 	{
-		if (e.EventType == LB_MouseEvent.MOUSE_EVENTS.MOUSE_DOWN)
-		{
-			game.TakeInput();
-		}
-		else if (e.EventType == LB_MouseEvent.MOUSE_EVENTS.MOUSE_UP)
-		{
-			game.HandleHexagonSelection();
-		}
-		else if (e.EventType == LB_MouseEvent.MOUSE_EVENTS.MOUSE_HOLD_MOVE)
-		{
-			game.HandleHexagonRotation();
-		}
+		game.TakeInput();
 	}
+	else if (e.EventType == LB_MouseEvent.MOUSE_EVENTS.MOUSE_UP)
+	{
+		game.HandleHexagonSelection();
+	}
+	else if (e.EventType == LB_MouseEvent.MOUSE_EVENTS.MOUSE_HOLD_MOVE)
+	{
+		game.HandleHexagonRotation();
+	}
+}
 
-	public void HandleEvent(LB_TouchEvent e)
+public void HandleEvent(LB_TouchEvent e)
+{
+	if (e.EventType == LB_TouchEvent.LB_TOUCH_EVENTS.TOUCH_DOWN)
 	{
-			if (e.EventType == LB_TouchEvent.LB_TOUCH_EVENTS.TOUCH_DOWN)
-		{
-			game.TakeInput();
-		}
-		else if (e.EventType == LB_TouchEvent.LB_TOUCH_EVENTS.TOUCH_UP)
-		{
-			game.HandleHexagonSelection();
-		}
-		else if (e.EventType == LB_TouchEvent.LB_TOUCH_EVENTS.TOUCH_MOVE)
-		{
-			game.HandleHexagonRotation();
-		}
+		game.TakeInput();
 	}
+	else if (e.EventType == LB_TouchEvent.LB_TOUCH_EVENTS.TOUCH_UP)
+	{
+		game.HandleHexagonSelection();
+	}
+	else if (e.EventType == LB_TouchEvent.LB_TOUCH_EVENTS.TOUCH_MOVE)
+	{
+		game.HandleHexagonRotation();
+	}
+}
 ```
 
 Now, we are at the final step to integrate CSEMS fully. It is time to register our class, `HexfallGameController`, to the related event managers. This step is inevitable and if you do not register your class to the related event managers, you cannot receive any event calls. It is like expecting phone calls without having a phone number.
